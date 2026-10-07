@@ -1,0 +1,173 @@
+[
+  {
+    "thread_id": "sesion-1",
+    "pregunta": "¿Qué producto tiene menos stock y cuándo llega su próximo pedido?",
+    "llamadas_a_herramientas": 2,
+    "pasos": [
+      {
+        "tipo": "usuario",
+        "contenido": "¿Qué producto tiene menos stock y cuándo llega su próximo pedido?"
+      },
+      {
+        "tipo": "accion",
+        "herramienta": "consultar_stock",
+        "argumentos": {
+          "producto": "todos"
+        }
+      },
+      {
+        "tipo": "observacion",
+        "herramienta": "consultar_stock",
+        "contenido": {
+          "stock": {
+            "leche": 120,
+            "pan": 35,
+            "arroz": 80,
+            "aceite": 8,
+            "yerba": 45
+          }
+        }
+      },
+      {
+        "tipo": "accion",
+        "herramienta": "buscar_pedidos",
+        "argumentos": {
+          "producto": "aceite"
+        }
+      },
+      {
+        "tipo": "observacion",
+        "herramienta": "buscar_pedidos",
+        "contenido": {
+          "producto": "aceite",
+          "proveedor": "Aceites Cuyo",
+          "fecha_entrega": "2026-10-12",
+          "cantidad": 60
+        }
+      },
+      {
+        "tipo": "respuesta",
+        "contenido": "El producto con menos stock es el **aceite**, con solo 8 unidades.\n\nSu próximo pedido llega el **12/10/2026**. El proveedor es Aceites Cuyo y el pedido es de 60 unidades."
+      }
+    ]
+  },
+  {
+    "thread_id": "sesion-1",
+    "pregunta": "¿Y quién es el proveedor de ese producto?",
+    "llamadas_a_herramientas": 0,
+    "pasos": [
+      {
+        "tipo": "usuario",
+        "contenido": "¿Y quién es el proveedor de ese producto?"
+      },
+      {
+        "tipo": "respuesta",
+        "contenido": "El proveedor del aceite es **Aceites Cuyo**."
+      }
+    ]
+  },
+  {
+    "thread_id": "sesion-2",
+    "pregunta": "¿Cuánto stock hay de fideos y cuándo llega el próximo pedido?",
+    "llamadas_a_herramientas": 2,
+    "pasos": [
+      {
+        "tipo": "usuario",
+        "contenido": "¿Cuánto stock hay de fideos y cuándo llega el próximo pedido?"
+      },
+      {
+        "tipo": "accion",
+        "herramienta": "consultar_stock",
+        "argumentos": {
+          "producto": "fideos"
+        }
+      },
+      {
+        "tipo": "accion",
+        "herramienta": "buscar_pedidos",
+        "argumentos": {
+          "producto": "fideos"
+        }
+      },
+      {
+        "tipo": "observacion",
+        "herramienta": "consultar_stock",
+        "contenido": {
+          "error": "El producto 'fideos' no existe.",
+          "productos_disponibles": [
+            "leche",
+            "pan",
+            "arroz",
+            "aceite",
+            "yerba"
+          ]
+        }
+      },
+      {
+        "tipo": "observacion",
+        "herramienta": "buscar_pedidos",
+        "contenido": {
+          "error": "No hay pedidos para 'fideos'.",
+          "productos_disponibles": [
+            "leche",
+            "pan",
+            "arroz",
+            "aceite",
+            "yerba"
+          ]
+        }
+      },
+      {
+        "tipo": "respuesta",
+        "contenido": "No tengo \"fideos\" en el inventario. Los productos que figuran son: leche, pan, arroz, aceite y yerba.\n\n¿Querés que consulte el stock y el próximo pedido de alguno de ellos, por ejemplo arroz?"
+      }
+    ]
+  },
+  {
+    "thread_id": "sesion-2",
+    "pregunta": "Perdón, quise decir arroz.",
+    "llamadas_a_herramientas": 2,
+    "pasos": [
+      {
+        "tipo": "usuario",
+        "contenido": "Perdón, quise decir arroz."
+      },
+      {
+        "tipo": "accion",
+        "herramienta": "consultar_stock",
+        "argumentos": {
+          "producto": "arroz"
+        }
+      },
+      {
+        "tipo": "accion",
+        "herramienta": "buscar_pedidos",
+        "argumentos": {
+          "producto": "arroz"
+        }
+      },
+      {
+        "tipo": "observacion",
+        "herramienta": "consultar_stock",
+        "contenido": {
+          "producto": "arroz",
+          "stock": 80
+        }
+      },
+      {
+        "tipo": "observacion",
+        "herramienta": "buscar_pedidos",
+        "contenido": {
+          "producto": "arroz",
+          "proveedor": "Distribuidora Norte",
+          "fecha_entrega": "2026-10-15",
+          "cantidad": 150
+        }
+      },
+      {
+        "tipo": "respuesta",
+        "contenido": "De arroz hay **80 unidades** en stock.\n\nEl próximo pedido llega el **15/10/2026** de parte de Distribuidora Norte, e incluye **150 unidades**."
+      }
+    ]
+  }
+]

@@ -1,0 +1,37 @@
+[thread_id=sesion-1]
+Usuario: "¿Qué producto tiene menos stock y cuándo llega su próximo pedido?"
+→ El agente decide usar la herramienta: consultar_stock(producto='todos')
+→ La herramienta devuelve: {"stock": {"leche": 120, "pan": 35, "arroz": 80, "aceite": 8, "yerba": 45}}
+→ El agente decide usar la herramienta: buscar_pedidos(producto='aceite')
+→ La herramienta devuelve: {"producto": "aceite", "proveedor": "Aceites Cuyo", "fecha_entrega": "2026-10-12", "cantidad": 60}
+Respuesta: "El producto con menos stock es el **aceite**, con solo 8 unidades.
+
+Su próximo pedido llega el **12/10/2026**. El proveedor es Aceites Cuyo y el pedido es de 60 unidades."
+(llamadas a herramientas: 2)
+
+[thread_id=sesion-1]
+Usuario: "¿Y quién es el proveedor de ese producto?"
+Respuesta: "El proveedor del aceite es **Aceites Cuyo**."
+(llamadas a herramientas: 0)
+
+[thread_id=sesion-2]
+Usuario: "¿Cuánto stock hay de fideos y cuándo llega el próximo pedido?"
+→ El agente decide usar la herramienta: consultar_stock(producto='fideos')
+→ El agente decide usar la herramienta: buscar_pedidos(producto='fideos')
+→ La herramienta devuelve: {"error": "El producto 'fideos' no existe.", "productos_disponibles": ["leche", "pan", "arroz", "aceite", "yerba"]}
+→ La herramienta devuelve: {"error": "No hay pedidos para 'fideos'.", "productos_disponibles": ["leche", "pan", "arroz", "aceite", "yerba"]}
+Respuesta: "No tengo "fideos" en el inventario. Los productos que figuran son: leche, pan, arroz, aceite y yerba.
+
+¿Querés que consulte el stock y el próximo pedido de alguno de ellos, por ejemplo arroz?"
+(llamadas a herramientas: 2)
+
+[thread_id=sesion-2]
+Usuario: "Perdón, quise decir arroz."
+→ El agente decide usar la herramienta: consultar_stock(producto='arroz')
+→ El agente decide usar la herramienta: buscar_pedidos(producto='arroz')
+→ La herramienta devuelve: {"producto": "arroz", "stock": 80}
+→ La herramienta devuelve: {"producto": "arroz", "proveedor": "Distribuidora Norte", "fecha_entrega": "2026-10-15", "cantidad": 150}
+Respuesta: "De arroz hay **80 unidades** en stock.
+
+El próximo pedido llega el **15/10/2026** de parte de Distribuidora Norte, e incluye **150 unidades**."
+(llamadas a herramientas: 2)
