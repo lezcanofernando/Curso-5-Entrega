@@ -1,0 +1,14 @@
+2026-10-13 21:05:49,500 INFO main: === Ejecución 1: nueva conexión a memoria.db (AsyncSqliteSaver) ===
+2026-10-13 21:05:49,657 INFO main: thread_id=sesion-1 | mensajes recuperados de memoria.db: 0 | pregunta: ¿Qué producto tiene menos stock y cuándo llega su próximo pedido?
+2026-10-13 21:05:51,497 INFO agente: nodo modelo: 1.83s | 1 mensajes enviados | pide herramientas ['consultar_stock']
+2026-10-13 21:05:53,085 INFO agente: nodo modelo: 1.58s | 3 mensajes enviados | pide herramientas ['buscar_pedidos']
+2026-10-13 21:05:54,377 INFO agente: nodo modelo: 1.29s | 5 mensajes enviados | responde al usuario
+2026-10-13 21:05:54,419 INFO main: thread_id=sesion-2 | mensajes recuperados de memoria.db: 0 | pregunta: ¿Cuánto stock hay de fideos y cuándo llega el próximo pedido?
+2026-10-13 21:05:56,060 INFO agente: nodo modelo: 1.64s | 1 mensajes enviados | pide herramientas ['consultar_stock', 'buscar_pedidos']
+2026-10-13 21:05:57,561 INFO agente: nodo modelo: 1.50s | 4 mensajes enviados | responde al usuario
+2026-10-13 21:05:57,607 INFO main: thread_id=sesion-2 | mensajes recuperados de memoria.db: 5 | pregunta: Perdón, quise decir arroz.
+2026-10-13 21:05:59,029 INFO agente: nodo modelo: 1.42s | 6 mensajes enviados | pide herramientas ['consultar_stock', 'buscar_pedidos']
+2026-10-13 21:06:00,420 INFO agente: nodo modelo: 1.39s | 9 mensajes enviados | responde al usuario
+2026-10-13 21:06:00,504 INFO main: === Ejecución 2: nueva conexión a memoria.db (AsyncSqliteSaver) ===
+2026-10-13 21:06:00,509 INFO main: thread_id=sesion-1 | mensajes recuperados de memoria.db: 6 | pregunta: ¿Y quién es el proveedor de ese producto?
+2026-10-13 21:06:02,030 INFO agente: nodo modelo: 1.52s | 7 mensajes enviados | responde al usuario

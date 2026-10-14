@@ -1,173 +1,239 @@
-[
-  {
-    "thread_id": "sesion-1",
-    "pregunta": "¿Qué producto tiene menos stock y cuándo llega su próximo pedido?",
-    "llamadas_a_herramientas": 2,
-    "pasos": [
-      {
-        "tipo": "usuario",
-        "contenido": "¿Qué producto tiene menos stock y cuándo llega su próximo pedido?"
-      },
-      {
-        "tipo": "accion",
-        "herramienta": "consultar_stock",
-        "argumentos": {
-          "producto": "todos"
-        }
-      },
-      {
-        "tipo": "observacion",
-        "herramienta": "consultar_stock",
-        "contenido": {
-          "stock": {
-            "leche": 120,
-            "pan": 35,
-            "arroz": 80,
-            "aceite": 8,
-            "yerba": 45
+{
+  "fecha": "2026-10-13T21:06:02",
+  "modelo": "claude-sonnet-5-5",
+  "checkpointer": "AsyncSqliteSaver (memoria.db)",
+  "recursion_limit": 10,
+  "turnos": [
+    {
+      "ejecucion": 1,
+      "thread_id": "sesion-1",
+      "mensajes_previos_en_memoria": 0,
+      "llamadas_a_herramientas": 2,
+      "duracion_segundos": 4.76,
+      "pasos": [
+        {
+          "paso": "input_usuario",
+          "mensaje": "HumanMessage",
+          "contenido": "¿Qué producto tiene menos stock y cuándo llega su próximo pedido?"
+        },
+        {
+          "paso": "pensamiento",
+          "mensaje": "AIMessage",
+          "contenido": "Voy a consultar el stock de todos los productos para ver cuál tiene menos unidades."
+        },
+        {
+          "paso": "accion",
+          "mensaje": "AIMessage.tool_calls",
+          "herramienta": "consultar_stock",
+          "argumentos": {
+            "producto": "todos"
+          },
+          "tool_call_id": "toolu_01DAwwUHhGhJPmrTTLkvCFBX"
+        },
+        {
+          "paso": "observacion",
+          "mensaje": "ToolMessage",
+          "herramienta": "consultar_stock",
+          "tool_call_id": "toolu_01DAwwUHhGhJPmrTTLkvCFBX",
+          "contenido": {
+            "stock": {
+              "leche": 120,
+              "pan": 35,
+              "arroz": 80,
+              "aceite": 8,
+              "yerba": 45
+            }
           }
+        },
+        {
+          "paso": "pensamiento",
+          "mensaje": "AIMessage",
+          "contenido": "El producto con menos stock es el aceite, con 8 unidades. Ahora busco su próximo pedido al proveedor."
+        },
+        {
+          "paso": "accion",
+          "mensaje": "AIMessage.tool_calls",
+          "herramienta": "buscar_pedidos",
+          "argumentos": {
+            "producto": "aceite"
+          },
+          "tool_call_id": "toolu_01QG7xJML3rAu1hwrBV7GdHE"
+        },
+        {
+          "paso": "observacion",
+          "mensaje": "ToolMessage",
+          "herramienta": "buscar_pedidos",
+          "tool_call_id": "toolu_01QG7xJML3rAu1hwrBV7GdHE",
+          "contenido": {
+            "producto": "aceite",
+            "proveedor": "Aceites Cuyo",
+            "fecha_entrega": "2026-10-12",
+            "cantidad": 60
+          }
+        },
+        {
+          "paso": "respuesta_final",
+          "mensaje": "AIMessage",
+          "contenido": "El producto con menos stock es el **aceite**, con solo **8 unidades**.\n\nSu próximo pedido es de **60 unidades** del proveedor **Aceites Cuyo**. Llega el **12 de octubre de 2026**."
         }
-      },
-      {
-        "tipo": "accion",
-        "herramienta": "buscar_pedidos",
-        "argumentos": {
-          "producto": "aceite"
+      ]
+    },
+    {
+      "ejecucion": 1,
+      "thread_id": "sesion-2",
+      "mensajes_previos_en_memoria": 0,
+      "llamadas_a_herramientas": 2,
+      "duracion_segundos": 3.19,
+      "pasos": [
+        {
+          "paso": "input_usuario",
+          "mensaje": "HumanMessage",
+          "contenido": "¿Cuánto stock hay de fideos y cuándo llega el próximo pedido?"
+        },
+        {
+          "paso": "pensamiento",
+          "mensaje": "AIMessage",
+          "contenido": "Voy a consultar el stock de fideos y su próximo pedido a proveedor, para responderte ambas cosas."
+        },
+        {
+          "paso": "accion",
+          "mensaje": "AIMessage.tool_calls",
+          "herramienta": "consultar_stock",
+          "argumentos": {
+            "producto": "fideos"
+          },
+          "tool_call_id": "toolu_01KmSHxyFcjPGs51shYnCR5d"
+        },
+        {
+          "paso": "accion",
+          "mensaje": "AIMessage.tool_calls",
+          "herramienta": "buscar_pedidos",
+          "argumentos": {
+            "producto": "fideos"
+          },
+          "tool_call_id": "toolu_01T7snoSSMxAkkPDuUz8CKDS"
+        },
+        {
+          "paso": "observacion",
+          "mensaje": "ToolMessage",
+          "herramienta": "consultar_stock",
+          "tool_call_id": "toolu_01KmSHxyFcjPGs51shYnCR5d",
+          "contenido": {
+            "error": "El producto 'fideos' no existe.",
+            "productos_disponibles": [
+              "leche",
+              "pan",
+              "arroz",
+              "aceite",
+              "yerba"
+            ]
+          }
+        },
+        {
+          "paso": "observacion",
+          "mensaje": "ToolMessage",
+          "herramienta": "buscar_pedidos",
+          "tool_call_id": "toolu_01T7snoSSMxAkkPDuUz8CKDS",
+          "contenido": {
+            "error": "No hay pedidos para 'fideos'.",
+            "productos_disponibles": [
+              "leche",
+              "pan",
+              "arroz",
+              "aceite",
+              "yerba"
+            ]
+          }
+        },
+        {
+          "paso": "respuesta_final",
+          "mensaje": "AIMessage",
+          "contenido": "No encontré \"fideos\" en el inventario. Los productos disponibles son leche, pan, arroz, aceite y yerba.\n\n¿Querés que consulte alguno de ellos, por ejemplo arroz, que es el más parecido?"
         }
-      },
-      {
-        "tipo": "observacion",
-        "herramienta": "buscar_pedidos",
-        "contenido": {
-          "producto": "aceite",
-          "proveedor": "Aceites Cuyo",
-          "fecha_entrega": "2026-10-12",
-          "cantidad": 60
+      ]
+    },
+    {
+      "ejecucion": 1,
+      "thread_id": "sesion-2",
+      "mensajes_previos_en_memoria": 5,
+      "llamadas_a_herramientas": 2,
+      "duracion_segundos": 2.85,
+      "pasos": [
+        {
+          "paso": "input_usuario",
+          "mensaje": "HumanMessage",
+          "contenido": "Perdón, quise decir arroz."
+        },
+        {
+          "paso": "pensamiento",
+          "mensaje": "AIMessage",
+          "contenido": "Voy a consultar el stock de arroz y su próximo pedido a proveedor."
+        },
+        {
+          "paso": "accion",
+          "mensaje": "AIMessage.tool_calls",
+          "herramienta": "consultar_stock",
+          "argumentos": {
+            "producto": "arroz"
+          },
+          "tool_call_id": "toolu_01TACeJ6pzxeGrE2BT5HnAjM"
+        },
+        {
+          "paso": "accion",
+          "mensaje": "AIMessage.tool_calls",
+          "herramienta": "buscar_pedidos",
+          "argumentos": {
+            "producto": "arroz"
+          },
+          "tool_call_id": "toolu_01SLu2BeHSFPQzqzUJLmYpWy"
+        },
+        {
+          "paso": "observacion",
+          "mensaje": "ToolMessage",
+          "herramienta": "consultar_stock",
+          "tool_call_id": "toolu_01TACeJ6pzxeGrE2BT5HnAjM",
+          "contenido": {
+            "producto": "arroz",
+            "stock": 80
+          }
+        },
+        {
+          "paso": "observacion",
+          "mensaje": "ToolMessage",
+          "herramienta": "buscar_pedidos",
+          "tool_call_id": "toolu_01SLu2BeHSFPQzqzUJLmYpWy",
+          "contenido": {
+            "producto": "arroz",
+            "proveedor": "Distribuidora Norte",
+            "fecha_entrega": "2026-10-15",
+            "cantidad": 150
+          }
+        },
+        {
+          "paso": "respuesta_final",
+          "mensaje": "AIMessage",
+          "contenido": "Del arroz hay **80 unidades** en stock.\n\nEl próximo pedido llega el **15 de octubre de 2026**. El proveedor es Distribuidora Norte y trae **150 unidades**."
         }
-      },
-      {
-        "tipo": "respuesta",
-        "contenido": "El producto con menos stock es el **aceite**, con solo 8 unidades.\n\nSu próximo pedido llega el **12/10/2026**. El proveedor es Aceites Cuyo y el pedido es de 60 unidades."
-      }
-    ]
-  },
-  {
-    "thread_id": "sesion-1",
-    "pregunta": "¿Y quién es el proveedor de ese producto?",
-    "llamadas_a_herramientas": 0,
-    "pasos": [
-      {
-        "tipo": "usuario",
-        "contenido": "¿Y quién es el proveedor de ese producto?"
-      },
-      {
-        "tipo": "respuesta",
-        "contenido": "El proveedor del aceite es **Aceites Cuyo**."
-      }
-    ]
-  },
-  {
-    "thread_id": "sesion-2",
-    "pregunta": "¿Cuánto stock hay de fideos y cuándo llega el próximo pedido?",
-    "llamadas_a_herramientas": 2,
-    "pasos": [
-      {
-        "tipo": "usuario",
-        "contenido": "¿Cuánto stock hay de fideos y cuándo llega el próximo pedido?"
-      },
-      {
-        "tipo": "accion",
-        "herramienta": "consultar_stock",
-        "argumentos": {
-          "producto": "fideos"
+      ]
+    },
+    {
+      "ejecucion": 2,
+      "thread_id": "sesion-1",
+      "mensajes_previos_en_memoria": 6,
+      "llamadas_a_herramientas": 0,
+      "duracion_segundos": 1.57,
+      "pasos": [
+        {
+          "paso": "input_usuario",
+          "mensaje": "HumanMessage",
+          "contenido": "¿Y quién es el proveedor de ese producto?"
+        },
+        {
+          "paso": "respuesta_final",
+          "mensaje": "AIMessage",
+          "contenido": "El proveedor del aceite es **Aceites Cuyo**. Es el dato que obtuve en la consulta anterior, así que no hizo falta volver a buscarlo."
         }
-      },
-      {
-        "tipo": "accion",
-        "herramienta": "buscar_pedidos",
-        "argumentos": {
-          "producto": "fideos"
-        }
-      },
-      {
-        "tipo": "observacion",
-        "herramienta": "consultar_stock",
-        "contenido": {
-          "error": "El producto 'fideos' no existe.",
-          "productos_disponibles": [
-            "leche",
-            "pan",
-            "arroz",
-            "aceite",
-            "yerba"
-          ]
-        }
-      },
-      {
-        "tipo": "observacion",
-        "herramienta": "buscar_pedidos",
-        "contenido": {
-          "error": "No hay pedidos para 'fideos'.",
-          "productos_disponibles": [
-            "leche",
-            "pan",
-            "arroz",
-            "aceite",
-            "yerba"
-          ]
-        }
-      },
-      {
-        "tipo": "respuesta",
-        "contenido": "No tengo \"fideos\" en el inventario. Los productos que figuran son: leche, pan, arroz, aceite y yerba.\n\n¿Querés que consulte el stock y el próximo pedido de alguno de ellos, por ejemplo arroz?"
-      }
-    ]
-  },
-  {
-    "thread_id": "sesion-2",
-    "pregunta": "Perdón, quise decir arroz.",
-    "llamadas_a_herramientas": 2,
-    "pasos": [
-      {
-        "tipo": "usuario",
-        "contenido": "Perdón, quise decir arroz."
-      },
-      {
-        "tipo": "accion",
-        "herramienta": "consultar_stock",
-        "argumentos": {
-          "producto": "arroz"
-        }
-      },
-      {
-        "tipo": "accion",
-        "herramienta": "buscar_pedidos",
-        "argumentos": {
-          "producto": "arroz"
-        }
-      },
-      {
-        "tipo": "observacion",
-        "herramienta": "consultar_stock",
-        "contenido": {
-          "producto": "arroz",
-          "stock": 80
-        }
-      },
-      {
-        "tipo": "observacion",
-        "herramienta": "buscar_pedidos",
-        "contenido": {
-          "producto": "arroz",
-          "proveedor": "Distribuidora Norte",
-          "fecha_entrega": "2026-10-15",
-          "cantidad": 150
-        }
-      },
-      {
-        "tipo": "respuesta",
-        "contenido": "De arroz hay **80 unidades** en stock.\n\nEl próximo pedido llega el **15/10/2026** de parte de Distribuidora Norte, e incluye **150 unidades**."
-      }
-    ]
-  }
-]
+      ]
+    }
+  ]
+}

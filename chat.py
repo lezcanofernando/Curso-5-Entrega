@@ -12,11 +12,12 @@ from langgraph.checkpoint.sqlite.aio import AsyncSqliteSaver
 from langgraph.errors import GraphRecursionError
 
 from agent import construir_grafo
+from config import DB_PATH, RECURSION_LIMIT
 
 
 async def main(thread_id: str) -> None:
-    config = {"configurable": {"thread_id": thread_id}, "recursion_limit": 10}
-    async with AsyncSqliteSaver.from_conn_string("memoria.db") as checkpointer:
+    config = {"configurable": {"thread_id": thread_id}, "recursion_limit": RECURSION_LIMIT}
+    async with AsyncSqliteSaver.from_conn_string(DB_PATH) as checkpointer:
         agente = construir_grafo(checkpointer)
         print(f"Sesión '{thread_id}'. Escribí 'salir' para terminar.")
         while (pregunta := input("\nVos: ").strip()).lower() != "salir":

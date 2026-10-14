@@ -1,8 +1,8 @@
 """Definición del agente: estado, nodos y grafo de LangGraph."""
 
-import os
+import logging
+import time
 
-from dotenv import load_dotenv
 from langchain_anthropic import ChatAnthropic
 from langchain_core.messages import BaseMessage, SystemMessage, trim_messages
 from langgraph.checkpoint.base import BaseCheckpointSaver
@@ -10,15 +10,14 @@ from langgraph.graph import START, MessagesState, StateGraph
 from langgraph.graph.state import CompiledStateGraph
 from langgraph.prebuilt import ToolNode, tools_condition
 
+from config import MAX_MENSAJES, MODEL
 from tools import TOOLS
 
-load_dotenv()
-
-# Cuántos mensajes del historial le mandamos al LLM como máximo (evita el "estado sucio")
-MAX_MENSAJES = 20
+logger = logging.getLogger("agente")
 
 SYSTEM_PROMPT = """Sos el asistente de inventario de Supermercados del Valle.
 Respondé en español, de forma breve y clara.
+- Antes de llamar a una herramienta, escribí en una frase corta qué vas a buscar y por qué.
 - Usá las herramientas para obtener datos; nunca inventes stock, fechas ni proveedores.
 - Si una pregunta necesita varios datos, llamá a las herramientas las veces que haga falta.
 - Si una herramienta devuelve "error", revisá "productos_disponibles" y reintentá con el
@@ -33,7 +32,9 @@ class AgentState(MessagesState):
     """
 
 
-llm = ChatAnthropic(model=os.getenv("MODEL", "claude-sonnet-5-5"))
+# No se pasa `temperature` a propósito: claude-sonnet-5-5 no acepta valores distintos
+# del default y la API devuelve error. Este es el único lugar donde se crea el modelo.
+llm = ChatAnthropic(model=MODEL)
 llm_con_tools = llm.bind_tools(TOOLS)
 
 
@@ -47,7 +48,18 @@ async def nodo_modelo(state: AgentState) -> dict[str, list[BaseMessage]]:
         max_tokens=MAX_MENSAJES,
         start_on="human",
     )
+
+    inicio = time.perf_counter()
     respuesta = await llm_con_tools.ainvoke([SystemMessage(SYSTEM_PROMPT), *historial])
+    duracion = time.perf_counter() - inicio
+
+    herramientas = [llamada["name"] for llamada in respuesta.tool_calls]
+    logger.info(
+        "nodo modelo: %.2fs | %d mensajes enviados | %s",
+        duracion,
+        len(historial),
+        f"pide herramientas {herramientas}" if herramientas else "responde al usuario",
+    )
     return {"messages": [respuesta]}
 
 

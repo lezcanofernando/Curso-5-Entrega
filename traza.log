@@ -1,37 +1,45 @@
-[thread_id=sesion-1]
-Usuario: "¿Qué producto tiene menos stock y cuándo llega su próximo pedido?"
-→ El agente decide usar la herramienta: consultar_stock(producto='todos')
-→ La herramienta devuelve: {"stock": {"leche": 120, "pan": 35, "arroz": 80, "aceite": 8, "yerba": 45}}
-→ El agente decide usar la herramienta: buscar_pedidos(producto='aceite')
-→ La herramienta devuelve: {"producto": "aceite", "proveedor": "Aceites Cuyo", "fecha_entrega": "2026-10-12", "cantidad": 60}
-Respuesta: "El producto con menos stock es el **aceite**, con solo 8 unidades.
+=== Ejecución 1: nueva conexión a memoria.db (AsyncSqliteSaver) ===
 
-Su próximo pedido llega el **12/10/2026**. El proveedor es Aceites Cuyo y el pedido es de 60 unidades."
-(llamadas a herramientas: 2)
+[thread_id=sesion-1 | mensajes recuperados de memoria.db: 0]
+Usuario (HumanMessage): "¿Qué producto tiene menos stock y cuándo llega su próximo pedido?"
+→ El agente razona (AIMessage): Voy a consultar el stock de todos los productos para ver cuál tiene menos unidades.
+→ El agente decide usar la herramienta: consultar_stock(producto='todos')  [tool_call_id=toolu_01DAwwUHhGhJPmrTTLkvCFBX]
+→ La herramienta devuelve (ToolMessage, tool_call_id=toolu_01DAwwUHhGhJPmrTTLkvCFBX): {"stock": {"leche": 120, "pan": 35, "arroz": 80, "aceite": 8, "yerba": 45}}
+→ El agente razona (AIMessage): El producto con menos stock es el aceite, con 8 unidades. Ahora busco su próximo pedido al proveedor.
+→ El agente decide usar la herramienta: buscar_pedidos(producto='aceite')  [tool_call_id=toolu_01QG7xJML3rAu1hwrBV7GdHE]
+→ La herramienta devuelve (ToolMessage, tool_call_id=toolu_01QG7xJML3rAu1hwrBV7GdHE): {"producto": "aceite", "proveedor": "Aceites Cuyo", "fecha_entrega": "2026-10-12", "cantidad": 60}
+Respuesta (AIMessage): "El producto con menos stock es el **aceite**, con solo **8 unidades**.
 
-[thread_id=sesion-1]
-Usuario: "¿Y quién es el proveedor de ese producto?"
-Respuesta: "El proveedor del aceite es **Aceites Cuyo**."
-(llamadas a herramientas: 0)
+Su próximo pedido es de **60 unidades** del proveedor **Aceites Cuyo**. Llega el **12 de octubre de 2026**."
+(llamadas a herramientas: 2 | duración: 4.76s)
 
-[thread_id=sesion-2]
-Usuario: "¿Cuánto stock hay de fideos y cuándo llega el próximo pedido?"
-→ El agente decide usar la herramienta: consultar_stock(producto='fideos')
-→ El agente decide usar la herramienta: buscar_pedidos(producto='fideos')
-→ La herramienta devuelve: {"error": "El producto 'fideos' no existe.", "productos_disponibles": ["leche", "pan", "arroz", "aceite", "yerba"]}
-→ La herramienta devuelve: {"error": "No hay pedidos para 'fideos'.", "productos_disponibles": ["leche", "pan", "arroz", "aceite", "yerba"]}
-Respuesta: "No tengo "fideos" en el inventario. Los productos que figuran son: leche, pan, arroz, aceite y yerba.
+[thread_id=sesion-2 | mensajes recuperados de memoria.db: 0]
+Usuario (HumanMessage): "¿Cuánto stock hay de fideos y cuándo llega el próximo pedido?"
+→ El agente razona (AIMessage): Voy a consultar el stock de fideos y su próximo pedido a proveedor, para responderte ambas cosas.
+→ El agente decide usar la herramienta: consultar_stock(producto='fideos')  [tool_call_id=toolu_01KmSHxyFcjPGs51shYnCR5d]
+→ El agente decide usar la herramienta: buscar_pedidos(producto='fideos')  [tool_call_id=toolu_01T7snoSSMxAkkPDuUz8CKDS]
+→ La herramienta devuelve (ToolMessage, tool_call_id=toolu_01KmSHxyFcjPGs51shYnCR5d): {"error": "El producto 'fideos' no existe.", "productos_disponibles": ["leche", "pan", "arroz", "aceite", "yerba"]}
+→ La herramienta devuelve (ToolMessage, tool_call_id=toolu_01T7snoSSMxAkkPDuUz8CKDS): {"error": "No hay pedidos para 'fideos'.", "productos_disponibles": ["leche", "pan", "arroz", "aceite", "yerba"]}
+Respuesta (AIMessage): "No encontré "fideos" en el inventario. Los productos disponibles son leche, pan, arroz, aceite y yerba.
 
-¿Querés que consulte el stock y el próximo pedido de alguno de ellos, por ejemplo arroz?"
-(llamadas a herramientas: 2)
+¿Querés que consulte alguno de ellos, por ejemplo arroz, que es el más parecido?"
+(llamadas a herramientas: 2 | duración: 3.19s)
 
-[thread_id=sesion-2]
-Usuario: "Perdón, quise decir arroz."
-→ El agente decide usar la herramienta: consultar_stock(producto='arroz')
-→ El agente decide usar la herramienta: buscar_pedidos(producto='arroz')
-→ La herramienta devuelve: {"producto": "arroz", "stock": 80}
-→ La herramienta devuelve: {"producto": "arroz", "proveedor": "Distribuidora Norte", "fecha_entrega": "2026-10-15", "cantidad": 150}
-Respuesta: "De arroz hay **80 unidades** en stock.
+[thread_id=sesion-2 | mensajes recuperados de memoria.db: 5]
+Usuario (HumanMessage): "Perdón, quise decir arroz."
+→ El agente razona (AIMessage): Voy a consultar el stock de arroz y su próximo pedido a proveedor.
+→ El agente decide usar la herramienta: consultar_stock(producto='arroz')  [tool_call_id=toolu_01TACeJ6pzxeGrE2BT5HnAjM]
+→ El agente decide usar la herramienta: buscar_pedidos(producto='arroz')  [tool_call_id=toolu_01SLu2BeHSFPQzqzUJLmYpWy]
+→ La herramienta devuelve (ToolMessage, tool_call_id=toolu_01TACeJ6pzxeGrE2BT5HnAjM): {"producto": "arroz", "stock": 80}
+→ La herramienta devuelve (ToolMessage, tool_call_id=toolu_01SLu2BeHSFPQzqzUJLmYpWy): {"producto": "arroz", "proveedor": "Distribuidora Norte", "fecha_entrega": "2026-10-15", "cantidad": 150}
+Respuesta (AIMessage): "Del arroz hay **80 unidades** en stock.
 
-El próximo pedido llega el **15/10/2026** de parte de Distribuidora Norte, e incluye **150 unidades**."
-(llamadas a herramientas: 2)
+El próximo pedido llega el **15 de octubre de 2026**. El proveedor es Distribuidora Norte y trae **150 unidades**."
+(llamadas a herramientas: 2 | duración: 2.85s)
+
+=== Ejecución 2: nueva conexión a memoria.db (AsyncSqliteSaver) ===
+
+[thread_id=sesion-1 | mensajes recuperados de memoria.db: 6]
+Usuario (HumanMessage): "¿Y quién es el proveedor de ese producto?"
+Respuesta (AIMessage): "El proveedor del aceite es **Aceites Cuyo**. Es el dato que obtuve en la consulta anterior, así que no hizo falta volver a buscarlo."
+(llamadas a herramientas: 0 | duración: 1.57s)
